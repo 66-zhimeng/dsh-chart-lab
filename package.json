@@ -1,0 +1,56 @@
+{
+  "name": "dsh-chart-lab",
+  "version": "0.1.0",
+  "description": "Interactive ECharts cards for DeepSeek Harness (dsh): the host loads a dataset from the local workspace, the browser card does all slicing, aggregation and re-charting locally — zero model round-trips per interaction. Project-local JS recipes add custom controls and transforms.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": { "default": "./lib/index.js" },
+    "./client": { "default": "./lib/client.js" },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/tool.js",
+    "lib/dataset.js",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "author": "66-zhimeng",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/66-zhimeng/dsh-chart-lab.git"
+  },
+  "homepage": "https://github.com/66-zhimeng/dsh-chart-lab#readme",
+  "bugs": { "url": "https://github.com/66-zhimeng/dsh-chart-lab/issues" },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "echarts",
+    "charts",
+    "data-visualization",
+    "plugin",
+    "cordis"
+  ],
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": { "inject": [], "platform": "web" }
+  },
+  "dependencies": {
+    "echarts": "^6.0.0"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "scripts": {
+    "test": "node scripts/test-client.mjs && node scripts/test-interaction.mjs"
+  },
+  "engines": { "node": ">=22" },
+  "publishConfig": { "access": "public" }
+}

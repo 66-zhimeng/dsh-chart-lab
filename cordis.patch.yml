@@ -1,0 +1,9 @@
+# dsh-chart-lab bundle for DeepSeek Harness (dsh).
+# Inserted into the profile composition when this bundle is installed
+# (`dsh plugin --profile web add dsh-chart-lab`). The node half registers the
+# `chart_lab` tool plus the ECharts asset route; the client half registers a
+# keyed `tool.call.toolview` under the same tool name, so the card is purely
+# additive and never takes over another plugin's rendering.
+- insert:
+    - id: chart-lab
+      name: 'dsh-chart-lab'

@@ -1,0 +1,8 @@
+node_modules/
+pnpm-lock.yaml
+package-lock.json
+# ECharts resolves from node_modules at runtime; a vendored copy is only an
+# air-gapped fallback and must not enter the repository (1 MB, Apache-2.0).
+lib/assets/
+*.log
+.DS_Store
