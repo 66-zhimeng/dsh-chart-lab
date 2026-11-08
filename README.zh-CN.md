@@ -158,3 +158,5 @@ npm test        # 42 项数据引擎断言 + 16 项 jsdom 交互断言
 ## 许可证
 
 MIT。ECharts 以 Apache-2.0 作为依赖引入，本仓库不转发其产物。
+
+<p align="center"><img src="assets/demo.png" width="820" alt="dsh-chart-lab card"></p>

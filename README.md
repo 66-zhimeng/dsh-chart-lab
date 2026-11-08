@@ -166,3 +166,5 @@ npm test        # 42 data-engine assertions + 16 jsdom interaction assertions
 ## License
 
 MIT. ECharts is a dependency under Apache-2.0 and is not redistributed by this repository.
+
+<p align="center"><img src="assets/demo.png" width="820" alt="dsh-chart-lab card"></p>

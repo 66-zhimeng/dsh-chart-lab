@@ -6,3 +6,5 @@ package-lock.json
 lib/assets/
 *.log
 .DS_Store
+assets/demo.html
+assets/demo-chart.svg
