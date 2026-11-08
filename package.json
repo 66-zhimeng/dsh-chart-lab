@@ -5,9 +5,14 @@
   "type": "module",
   "main": "lib/index.js",
   "exports": {
-    ".": { "default": "./lib/index.js" },
-    "./client": { "default": "./lib/client.js" },
-    "./package.json": "./package.json"
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json",
+    "./icon": "./assets/icon-180.png"
   },
   "files": [
     "lib/index.js",
@@ -17,7 +22,10 @@
     "cordis.patch.yml",
     "README.md",
     "README.zh-CN.md",
-    "LICENSE"
+    "LICENSE",
+    "assets/icon-180.png",
+    "assets/icon-512.png",
+    "patches/artifact-results.mjs"
   ],
   "license": "MIT",
   "author": "66-zhimeng",
@@ -26,7 +34,9 @@
     "url": "git+https://github.com/66-zhimeng/dsh-chart-lab.git"
   },
   "homepage": "https://github.com/66-zhimeng/dsh-chart-lab#readme",
-  "bugs": { "url": "https://github.com/66-zhimeng/dsh-chart-lab/issues" },
+  "bugs": {
+    "url": "https://github.com/66-zhimeng/dsh-chart-lab/issues"
+  },
   "keywords": [
     "dsh",
     "deepseek-harness",
@@ -37,8 +47,13 @@
     "cordis"
   ],
   "dsh": {
-    "bundle": { "patch": "./cordis.patch.yml" },
-    "client": { "inject": [], "platform": "web" }
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
   },
   "dependencies": {
     "echarts": "^6.0.0"
@@ -51,6 +66,11 @@
   "scripts": {
     "test": "node scripts/test-client.mjs && node scripts/test-interaction.mjs"
   },
-  "engines": { "node": ">=22" },
-  "publishConfig": { "access": "public" }
+  "engines": {
+    "node": ">=22",
+    "dsh": ">=0.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }
