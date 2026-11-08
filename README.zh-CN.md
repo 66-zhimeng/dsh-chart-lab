@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/icon-180.png" width="96" alt="dsh-chart-lab"></p>
+
 # dsh-chart-lab
 
 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（`dsh`）的可交互 ECharts 数据卡片插件。

@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/icon-180.png" width="96" alt="dsh-chart-lab"></p>
+
 # dsh-chart-lab
 
 Interactive ECharts cards for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (`dsh`).
