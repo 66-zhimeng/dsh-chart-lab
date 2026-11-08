@@ -82,6 +82,32 @@ ECharts 另外白送：图例点击开关、带十字准星的 tooltip；分类�
 
 卡片状态按工具调用 id 持久化，滚动移出视口再回来不会丢。
 
+## 产出型卡片（不被工作详情折叠）
+
+图表是**产出**，不是过程。工具结果可以在 presentation meta 里声明 `artifact: true`：
+
+```js
+// lib/tool.js
+return { ...payload, artifact: true }
+```
+
+DSH 的聊天层据此把这个节点排除在「已完成轮次折叠」和「步骤分组」之外，卡片在对话里常驻。
+
+目前这套行为需要给已安装的 dsh 打一个本地补丁（上游还没有这个契约）：
+
+```sh
+node patches/artifact-results.mjs           # 打补丁
+node patches/artifact-results.mjs --check   # 只看状态
+node patches/artifact-results.mjs --revert  # 还原
+```
+
+补丁会先备份原 bundle 为 `client.js.orig`；升级 dsh 后需要重跑一次，然后刷新页面。
+
+## 卡片交互的取舍
+
+- **无效控件不再渲染**：单系列时没有「堆叠」，类别不足 9 个时没有 Top-N，维度取值唯一时没有「聚合」，类别少于 3 个时没有「排序」，平滑只在折线/面积图出现。按钮按了没反应，比按钮不存在更糟。
+- **配色**：顶部「配色」下拉提供 默认 / 水墨丹青 / 敦煌 / 宋瓷 / 莫兰迪 / 鲜明 六套方案，切换只重绘本地图表，不会回到模型。
+
 ## Recipe：放在项目里的功能代码
 
 recipe 是你自己仓库里的一个 JS 文件（惯例放 `.dshviz/recipes/*.js`）。它是一段**函数体**，`return` 一个对象：

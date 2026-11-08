@@ -62,7 +62,7 @@ const rows = [
 const columns = inferColumns(rows)
 
 /** Mount a card, optionally with a recipe, and return DOM helpers. */
-async function mount(recipe) {
+async function mount(recipe, chartOverride) {
   calls.length = 0
   const host = document.createElement('div')
   document.body.appendChild(host)
@@ -71,7 +71,7 @@ async function mount(recipe) {
     meta: {
       v: 1, title: '交互测试', note: '', source: { label: 'inline', total: rows.length },
       columns, rows,
-      chart: { type: 'bar', x: '周次', y: ['产量'], agg: 'sum', group: '', topN: 0, sort: 'none', stack: false },
+      chart: chartOverride ?? { type: 'bar', x: '周次', y: ['产量'], agg: 'sum', group: '', topN: 0, sort: 'none', stack: false },
       recipe: recipe ?? null,
     },
   }
@@ -110,7 +110,15 @@ console.log('\n[内置控件必须真的重画图表]')
       result === null ? '按钮不存在' : '实际 ' + seriesType(result.option) + (result.drew ? '' : '（且未重画）'))
   }
   const stacked = await card.click('堆叠')
-  check('点「堆叠」生效', stacked !== null && stacked.drew && stacked.option.series[0].stack === 'total')
+  check('单系列时「堆叠」不渲染（无效果的控件不出现）', stacked === null)
+}
+
+console.log('\n[多指标时堆叠才可用]')
+{
+  const card = await mount(undefined, { type: 'bar', x: '周次', y: ['产量', '能耗(kWh)'], agg: 'sum', group: '', topN: 0, sort: 'none', stack: false })
+  const stacked = await card.click('堆叠')
+  check('多指标时点「堆叠」生效', stacked !== null && stacked.drew && stacked.option.series[0].stack === 'total')
+  check('配色控件存在', card.host.querySelectorAll('.cl-sel').length >= 1)
 }
 
 console.log('\n[筛选必须同时改数据和图]')

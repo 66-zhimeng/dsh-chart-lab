@@ -82,6 +82,40 @@ Axis captions are derived from the selected columns, so they follow the dropdown
 
 Card state is keyed by tool call id, so scrolling away and back does not reset it.
 
+## Artifact cards (kept out of folded work details)
+
+A chart is an **output**, not process. A tool result may declare itself one:
+
+```js
+// lib/tool.js
+return { ...payload, artifact: true }
+```
+
+The chat layer then keeps that node outside the completed Turn's folded work
+details and outside collapsed step groups.
+
+That behaviour needs a local patch to the installed dsh bundle until the
+contract exists upstream:
+
+```sh
+node patches/artifact-results.mjs           # apply
+node patches/artifact-results.mjs --check   # status
+node patches/artifact-results.mjs --revert  # restore
+```
+
+The first apply backs the original bundle up as `client.js.orig`; re-run it
+after upgrading dsh, then refresh the page.
+
+## Control bar policy
+
+Controls that cannot change the current picture are not rendered: no stacking
+for a single series, no Top-N below nine categories, no aggregation when the
+dimension is unique, no sorting below three categories, smoothing only for
+line/area. A button that does nothing is worse than a missing one.
+
+The colour picker offers six schemes (default, ink, Dunhuang, celadon, Morandi,
+vivid); switching redraws locally without another model turn.
+
 ## Recipes: project-local processing code
 
 A recipe is a JS file in your own repository (`.dshviz/recipes/*.js` by convention). It is a **function body** that returns an object:
