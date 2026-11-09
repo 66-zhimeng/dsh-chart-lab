@@ -1,0 +1,210 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+body{padding:26px;font:13px/1.5 -apple-system,"SF Pro Text","PingFang SC",system-ui,sans-serif}
+.wrap{width:1080px;margin:0 auto;border:1px solid;border-radius:20px;padding:18px}
+html,body{background:#f6f7f9;color:#1f2329}
+     .wrap{background:#fff;border-color:rgba(15,23,42,.08);box-shadow:0 24px 60px -34px rgba(15,23,42,.45)}
+.cl-card{--cl-ink:var(--dsw-alias-label-primary,#1f2329);--cl-dim:var(--dsw-alias-label-secondary,#5b6169);--cl-faint:var(--dsw-alias-label-tertiary,#8b929a);--cl-line:var(--dsw-alias-border-l1,rgba(15,23,42,.1));--cl-surface:var(--dsw-alias-bg-layer-1,rgba(128,128,128,.05));--cl-tint:var(--dsw-alias-state-business-primary,#3b6ef0);border:.5px solid var(--cl-line);border-radius:14px;padding:14px 16px 12px;margin:8px 0;background:var(--cl-surface);color:var(--cl-ink);font-size:13px;line-height:1.5}
+.cl-head{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.cl-title{font-weight:600;font-size:14.5px;letter-spacing:-.01em}
+.cl-note{color:var(--cl-dim);font-size:11.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cl-src{flex:none;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;color:var(--cl-faint);border:.5px solid var(--cl-line);border-radius:6px;padding:1px 7px;white-space:nowrap}
+.cl-bar{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;margin-bottom:10px}
+.cl-types{display:inline-flex;align-items:center;gap:2px;padding:2px;border-radius:9px;background:rgba(128,128,128,.1)}
+.cl-grp{display:inline-flex;align-items:center;gap:3px;flex-wrap:wrap}
+.cl-lab{color:var(--cl-faint);font-size:11px;white-space:nowrap}
+.cl-btn{border:0;background:transparent;color:var(--cl-dim);border-radius:7px;padding:3px 8px;font-size:12px;font-family:inherit;line-height:1.5;cursor:pointer;transition:background .15s ease,color .15s ease}
+.cl-btn:hover{background:rgba(128,128,128,.16);color:var(--cl-ink)}
+.cl-btn[data-on="1"]{background:color-mix(in srgb,var(--cl-tint) 14%,transparent);color:var(--cl-tint);font-weight:600}
+.cl-sel{border:0;background:transparent;color:var(--cl-ink);border-radius:7px;padding:3px 5px;font-size:12px;font-family:inherit;max-width:190px;cursor:pointer}
+.cl-sel:hover{background:rgba(128,128,128,.16)}
+.cl-sel option{color:initial;background:#fff}
+.cl-rng{vertical-align:middle;width:104px;accent-color:var(--cl-tint)}
+.cl-chart{width:100%;height:340px;min-height:180px}
+.cl-resize{height:8px;cursor:ns-resize;color:var(--cl-faint);opacity:.45;text-align:center;font-size:9px;user-select:none;letter-spacing:2px}
+.cl-resize:hover{opacity:.85}
+.cl-tblwrap{max-height:340px;overflow:auto;border:.5px solid var(--cl-line);border-radius:10px}
+.cl-tbl{border-collapse:collapse;width:100%;font-size:12px;font-variant-numeric:tabular-nums}
+.cl-tbl th,.cl-tbl td{border-bottom:.5px solid var(--cl-line);padding:4px 10px;text-align:left;white-space:nowrap}
+.cl-tbl th{position:sticky;top:0;background:var(--cl-surface);backdrop-filter:blur(6px);font-weight:600;color:var(--cl-dim)}
+.cl-tbl tr:hover td{background:rgba(128,128,128,.08)}
+.cl-foot{display:flex;gap:10px;align-items:center;margin-top:8px;font-size:11px;color:var(--cl-faint);flex-wrap:wrap}
+.cl-err{color:#e5534b;font-size:12px;padding:6px 0}
+.cl-stack{font-size:10px;opacity:.6;white-space:pre-wrap;word-break:break-all;max-height:160px;overflow:auto;margin:4px 0}
+.cl-warn{color:var(--cl-dim);font-size:11px;padding:2px 0}
+.cl-card{margin:0}
+.cl-chart{height:auto}
+.cl-chart svg{display:block;width:100%;height:auto}
+</style></head><body>
+<div class="wrap">
+  <div class="cl-card">
+    <div class="cl-head">
+      <span class="cl-title">提交活动 · 最近 21 天</span>
+      <span class="cl-note">git log --all，按作者堆叠；卡片内可换类型、聚合、筛选并导出 CSV / PNG</span>
+      <span class="cl-src">.dsh-chart-lab/commit-activity.csv</span>
+    </div>
+    <div class="cl-bar">
+      <span class="cl-types"><button class="cl-btn">柱</button><button class="cl-btn">条</button><button class="cl-btn">线</button><button class="cl-btn" data-on="1">面</button><button class="cl-btn">饼</button><button class="cl-btn">环</button><button class="cl-btn">散点</button><button class="cl-btn">热力</button><button class="cl-btn">表</button></span>
+      <span class="cl-grp"><span class="cl-lab">维度</span><select class="cl-sel"><option>日期</option></select></span><span class="cl-grp"><span class="cl-lab">配色</span><select class="cl-sel"><option>宋瓷</option></select></span><span class="cl-grp"><span class="cl-lab">指标</span><button class="cl-btn" data-on="1">提交数</button></span><span class="cl-grp"><span class="cl-lab">分组</span><select class="cl-sel"><option>作者</option></select></span><span class="cl-grp"><span class="cl-lab">排序</span><select class="cl-sel"><option>原序</option></select></span><button class="cl-btn" data-on="1">堆叠</button>
+    </div>
+    <div class="cl-chart"><svg width="1016" height="404" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 1016 404">
+<rect width="1016" height="404" x="0" y="0" fill="none"></rect>
+<path d="M41 361.5L998 361.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<path d="M41 306.5L998 306.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<path d="M41 252.5L998 252.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<path d="M41 197.5L998 197.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<path d="M41 143.5L998 143.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<path d="M41 88.5L998 88.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<path d="M41 34.5L998 34.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" y="-3.5" transform="translate(41 22)" fill="rgb(28,32,38)" fill-opacity="0.52">提交数</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" y="7.5" transform="translate(519.5 389)" fill="rgb(28,32,38)" fill-opacity="0.52">日期</text>
+<path d="M41 361.5L998 361.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" stroke-linecap="round" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 361)" fill="rgb(28,32,38)" fill-opacity="0.52">0</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 306.5)" fill="rgb(28,32,38)" fill-opacity="0.52">50</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 252)" fill="rgb(28,32,38)" fill-opacity="0.52">100</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 197.5)" fill="rgb(28,32,38)" fill-opacity="0.52">150</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 143)" fill="rgb(28,32,38)" fill-opacity="0.52">200</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 88.5)" fill="rgb(28,32,38)" fill-opacity="0.52">250</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 34)" fill="rgb(28,32,38)" fill-opacity="0.52">300</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(63.7857 371)" fill="rgb(28,32,38)" fill-opacity="0.52">10-19</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(109.3571 371)" fill="rgb(28,32,38)" fill-opacity="0.52">10-20</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(154.9286 371)" fill="rgb(28,32,38)" fill-opacity="0.52">10-21</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(200.5 371)" fill="rgb(28,32,38)" fill-opacity="0.52">10-22</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(246.0714 371)" fill="rgb(28,32,38)" fill-opacity="0.52">10-23</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(291.6429 371)" fill="rgb(28,32,38)" fill-opacity="0.52">10-24</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(337.2143 371)" fill="rgb(28,32,38)" fill-opacity="0.52">10-25</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(382.7857 371)" fill="rgb(28,32,38)" fill-opacity="0.52">10-26</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(428.3571 371)" fill="rgb(28,32,38)" fill-opacity="0.52">10-27</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(473.9286 371)" fill="rgb(28,32,38)" fill-opacity="0.52">10-28</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(519.5 371)" fill="rgb(28,32,38)" fill-opacity="0.52">10-29</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(565.0714 371)" fill="rgb(28,32,38)" fill-opacity="0.52">10-30</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(610.6429 371)" fill="rgb(28,32,38)" fill-opacity="0.52">10-31</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(656.2143 371)" fill="rgb(28,32,38)" fill-opacity="0.52">11-01</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(701.7857 371)" fill="rgb(28,32,38)" fill-opacity="0.52">11-02</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(747.3571 371)" fill="rgb(28,32,38)" fill-opacity="0.52">11-03</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(792.9286 371)" fill="rgb(28,32,38)" fill-opacity="0.52">11-04</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(838.5 371)" fill="rgb(28,32,38)" fill-opacity="0.52">11-05</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(884.0714 371)" fill="rgb(28,32,38)" fill-opacity="0.52">11-06</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(929.6429 371)" fill="rgb(28,32,38)" fill-opacity="0.52">11-07</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(975.2143 371)" fill="rgb(28,32,38)" fill-opacity="0.52">11-08</text>
+<g clip-path="url(#zr0-c0)">
+<path d="M63.8 357.7L109.4 361L154.9 361L200.5 359.9L246.1 342.5L291.6 356.6L337.2 357.7L382.8 329.4L428.4 353.4L473.9 361L519.5 361L565.1 338.1L610.6 361L656.2 361L701.8 351.2L747.4 100.5L792.9 316.3L838.5 280.3L884.1 298.9L929.6 259.6L975.2 351.2L975.2 361L929.6 361L884.1 361L838.5 361L792.9 361L747.4 361L701.8 361L656.2 361L610.6 361L565.1 361L519.5 361L473.9 361L428.4 361L382.8 361L337.2 361L291.6 361L246.1 361L200.5 361L154.9 361L109.4 361L63.8 361Z" fill="#6E9095" fill-opacity="0.18" class="zr0-cls-3"></path>
+</g>
+<g clip-path="url(#zr0-c1)">
+<path d="M63.8 350.1L109.4 345.7L154.9 355.5L200.5 345.7L246.1 304.3L291.6 317.4L337.2 322.9L382.8 297.8L428.4 304.3L473.9 330.5L519.5 321.8L565.1 328.3L610.6 295.6L656.2 322.9L701.8 315.2L747.4 52.5L792.9 303.2L838.5 274.9L884.1 298.9L929.6 221.5L975.2 335.9L975.2 351.2L929.6 259.6L884.1 298.9L838.5 280.3L792.9 316.3L747.4 100.5L701.8 351.2L656.2 361L610.6 361L565.1 338.1L519.5 361L473.9 361L428.4 353.4L382.8 329.4L337.2 357.7L291.6 356.6L246.1 342.5L200.5 359.9L154.9 361L109.4 361L63.8 357.7Z" fill="#7C9A8A" fill-opacity="0.18" class="zr0-cls-5"></path>
+</g>
+<g clip-path="url(#zr0-c0)">
+<path d="M63.8 357.7L109.4 361L154.9 361L200.5 359.9L246.1 342.5L291.6 356.6L337.2 357.7L382.8 329.4L428.4 353.4L473.9 361L519.5 361L565.1 338.1L610.6 361L656.2 361L701.8 351.2L747.4 100.5L792.9 316.3L838.5 280.3L884.1 298.9L929.6 259.6L975.2 351.2" fill="none" pointer-events="visible" stroke="#6E9095" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel" class="zr0-cls-6"></path>
+</g>
+<g clip-path="url(#zr0-c1)">
+<path d="M63.8 350.1L109.4 345.7L154.9 355.5L200.5 345.7L246.1 304.3L291.6 317.4L337.2 322.9L382.8 297.8L428.4 304.3L473.9 330.5L519.5 321.8L565.1 328.3L610.6 295.6L656.2 322.9L701.8 315.2L747.4 52.5L792.9 303.2L838.5 274.9L884.1 298.9L929.6 221.5L975.2 335.9" fill="none" pointer-events="visible" stroke="#7C9A8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel" class="zr0-cls-6"></path>
+</g>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,63.7857,357.73)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,109.3571,361)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,154.9286,361)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,200.5,359.91)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,246.0714,342.47)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,291.6429,356.64)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,337.2143,357.73)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,382.7857,329.39)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="7" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,428.3571,353.37)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="8" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,473.9286,361)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="9" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,519.5,361)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="10" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,565.0714,338.11)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="11" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,610.6429,361)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="12" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,656.2143,361)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="13" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,701.7857,351.19)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="14" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,747.3571,100.49)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="15" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,792.9286,316.31)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="16" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,838.5,280.34)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="17" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,884.0714,298.87)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="18" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,929.6429,259.63)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="19" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,975.2143,351.19)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="20" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,63.7857,350.1)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,109.3571,345.74)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,154.9286,355.55)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,200.5,345.74)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,246.0714,304.32)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,291.6429,317.4)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,337.2143,322.85)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,382.7857,297.78)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="7" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,428.3571,304.32)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="8" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,473.9286,330.48)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="9" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,519.5,321.76)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="10" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,565.0714,328.3)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="11" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,610.6429,295.6)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="12" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,656.2143,322.85)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="13" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,701.7857,315.22)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="14" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,747.3571,52.53)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="15" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,792.9286,303.23)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="16" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,838.5,274.89)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="17" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,884.0714,298.87)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="18" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,929.6429,221.48)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="19" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,975.2143,335.93)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="20" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M-5 -8l166 0l0 25l-166 0Z" transform="translate(853 10)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#b7b9be" stroke-width="0" class="zr0-cls-0"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(853 10)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(853 10)" fill="rgb(28,32,38)" fill-opacity="0.52">66-zhimeng</text>
+<path d="M0 0l84 0l0 9l-84 0Z" transform="translate(853 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" class="zr0-cls-7"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(953 10)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(953 10)" fill="rgb(28,32,38)" fill-opacity="0.52">search</text>
+<path d="M0 0l56 0l0 9l-56 0Z" transform="translate(953 10)" fill="none" pointer-events="visible" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="legend" class="zr0-cls-7"></path>
+<defs >
+<clipPath id="zr0-c0">
+<path d="M40 33l959 0l0 329l-959 0Z" fill="#000" class="zr0-cls-1 zr0-cls-2"></path>
+</clipPath>
+<clipPath id="zr0-c1">
+<path d="M40 33l959 0l0 329l-959 0Z" fill="#000" class="zr0-cls-4 zr0-cls-2"></path>
+</clipPath>
+</defs>
+<style ><![CDATA[
+.zr0-cls-0:hover {
+pointer-events:none;
+}
+.zr0-cls-1 {
+animation:zr0-ani-0 0.32s linear both;
+}
+.zr0-cls-2:hover {
+cursor:pointer;
+fill:rgba(0,0,0,1);
+}
+.zr0-cls-3:hover {
+cursor:pointer;
+fill:rgba(121,158,163,1);
+}
+.zr0-cls-4 {
+animation:zr0-ani-1 0.32s linear both;
+}
+.zr0-cls-5:hover {
+cursor:pointer;
+fill:rgba(136,169,151,1);
+}
+.zr0-cls-6:hover {
+cursor:pointer;
+}
+.zr0-cls-7:hover {
+cursor:pointer;
+fill:rgba(0,0,0,0);
+}
+@keyframes zr0-ani-0 {
+0% {
+d:path("M40 33l0 0l0 329l0 0Z");
+}
+100% {
+d:path("M40 33l959 0l0 329l-959 0Z");
+}
+}
+@keyframes zr0-ani-1 {
+0% {
+d:path("M40 33l0 0l0 329l0 0Z");
+}
+100% {
+d:path("M40 33l959 0l0 329l-959 0Z");
+}
+}
+]]>
+
+</style>
+</svg></div>
+    <div class="cl-foot"><span>42 行 × 3 列</span><span>本地计算 · 不产生模型往返</span></div>
+  </div>
+</div>
+</body></html>

@@ -74,8 +74,16 @@ const rows = [
   ['11-08', '66-zhimeng', 9], ['11-08', 'search', 14],
 ].map(([日期, 作者, 提交数]) => ({ 日期, 作者, 提交数 }))
 
+const PALETTE_ID = process.env.PALETTE || 'ink'
+const THEME = process.env.THEME === 'dark' ? 'dark' : 'light'
+const CHART_TYPE = process.env.TYPE || 'bar'
+const OUT_HTML = process.env.OUT || 'assets/demo.html'
+
+const paletteLabel = { default: '默认', ink: '水墨丹青', dunhuang: '敦煌', celadon: '宋瓷', morandi: '莫兰迪', vivid: '鲜明' }[PALETTE_ID] || PALETTE_ID
+const typeLabel = { bar: '柱状', line: '折线', area: '面积', hbar: '条形', pie: '饼图', donut: '环图' }[CHART_TYPE] || CHART_TYPE
+
 const state = {
-  type: 'bar',
+  type: CHART_TYPE,
   x: '日期',
   y: ['提交数'],
   agg: 'sum',
@@ -83,7 +91,7 @@ const state = {
   topN: 0,
   sort: 'none',
   stack: true,
-  palette: 'ink',
+  palette: PALETTE_ID,
   xName: '日期',
   yName: '提交数',
   filters: {},
@@ -91,7 +99,7 @@ const state = {
 }
 
 const view = T.aggregate(rows, state)
-const option = T.buildOption(view, state, false)
+const option = T.buildOption(view, state, THEME === 'dark')
 
 const chart = echarts.init(null, null, { renderer: 'svg', ssr: true, width: 1016, height: 404 })
 chart.setOption(option)
@@ -104,21 +112,29 @@ const btn = (label, on) => `<button class="cl-btn"${on ? ' data-on="1"' : ''}>${
 const sel = (value) => `<select class="cl-sel"><option>${esc(value)}</option></select>`
 const grp = (label, control) => `<span class="cl-grp"><span class="cl-lab">${esc(label)}</span>${control}</span>`
 
+const TYPE_ORDER = ['bar', 'hbar', 'line', 'area', 'pie', 'donut', 'scatter', 'heatmap']
 const types = ['柱', '条', '线', '面', '饼', '环', '散点', '热力']
-  .map((label, index) => btn(label, index === 0)).join('') + btn('表', false)
+  .map((label, index) => btn(label, TYPE_ORDER[index] === CHART_TYPE)).join('') + btn('表', false)
 const controls = [
   grp('维度', sel('日期')),
-  grp('配色', sel('水墨丹青')),
+  grp('配色', sel(paletteLabel)),
   grp('指标', btn('提交数', true)),
   grp('分组', sel('作者')),
   grp('排序', sel('原序')),
-  btn('堆叠', true),
+  btn('堆叠', CHART_TYPE === 'bar' || CHART_TYPE === 'area'),
 ].join('')
 
+const darkShell = THEME === 'dark'
+  ? `html,body{background:#111318;color:#e8eaf0}
+     .wrap{background:#191c22;border-color:rgba(255,255,255,.08);box-shadow:0 24px 60px -34px #000}
+     .cl-card{--cl-ink:#eceef4;--cl-dim:#a9afb9;--cl-faint:#7e858f;--cl-line:rgba(255,255,255,.12);--cl-surface:#20242c;--cl-tint:#8fb0ff}`
+  : `html,body{background:#f6f7f9;color:#1f2329}
+     .wrap{background:#fff;border-color:rgba(15,23,42,.08);box-shadow:0 24px 60px -34px rgba(15,23,42,.45)}`
+
 const html = `<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
-html,body{margin:0;background:#f6f7f9}
-body{padding:26px;font:13px/1.5 -apple-system,"SF Pro Text","PingFang SC",system-ui,sans-serif;color:#1f2329}
-.wrap{width:1080px;margin:0 auto;background:#fff;border:1px solid rgba(15,23,42,.08);border-radius:20px;padding:18px;box-shadow:0 24px 60px -34px rgba(15,23,42,.45)}
+body{padding:26px;font:13px/1.5 -apple-system,"SF Pro Text","PingFang SC",system-ui,sans-serif}
+.wrap{width:1080px;margin:0 auto;border:1px solid;border-radius:20px;padding:18px}
+${darkShell}
 ${T.CSS}
 .cl-card{margin:0}
 .cl-chart{height:auto}
@@ -142,5 +158,5 @@ ${T.CSS}
 </body></html>`
 
 writeFileSync(join(root, 'assets', 'demo-chart.svg'), chartSvg)
-writeFileSync(join(root, 'assets', 'demo.html'), html)
-console.log('wrote assets/demo-chart.svg and assets/demo.html')
+writeFileSync(join(root, OUT_HTML), html)
+console.log('wrote ' + join(root, OUT_HTML))

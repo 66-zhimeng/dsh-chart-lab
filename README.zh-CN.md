@@ -84,6 +84,12 @@ ECharts 另外白送：图例点击开关、带十字准星的 tooltip；分类�
 
 卡片状态按工具调用 id 持久化，滚动移出视口再回来不会丢。
 
+## 图表形式
+
+![图表形式总览](assets/gallery.png)
+
+九种输出形式（柱/条/线/面/饼/环/散点/热力/表格），由插件自身的 `aggregate` + `buildOption` 渲染。
+
 ## 产出型卡片（不被工作详情折叠）
 
 图表是**产出**，不是过程。工具结果可以在 presentation meta 里声明 `artifact: true`：

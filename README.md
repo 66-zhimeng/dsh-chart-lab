@@ -84,6 +84,12 @@ Axis captions are derived from the selected columns, so they follow the dropdown
 
 Card state is keyed by tool call id, so scrolling away and back does not reset it.
 
+## Chart forms
+
+![Chart forms](assets/gallery.png)
+
+All nine output forms (bar, horizontal bar, line, area, pie, donut, scatter, heatmap, table), rendered by the plugin's own `aggregate` + `buildOption`.
+
 ## Artifact cards (kept out of folded work details)
 
 A chart is an **output**, not process. A tool result may declare itself one:

@@ -1,0 +1,880 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+html,body{margin:0;background:#f6f7f9;color:#1f2329}
+body{padding:28px;font:13px/1.5 -apple-system,"SF Pro Text","PingFang SC",system-ui,sans-serif}
+h1{font-size:16px;font-weight:650;margin:0 0 4px}
+.sub{color:#6b7278;font-size:12px;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.panel{background:#fff;border:1px solid rgba(15,23,42,.08);border-radius:16px;padding:14px 14px 10px;box-shadow:0 16px 40px -30px rgba(15,23,42,.5)}
+.panel-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.panel-title{font-size:12.5px;font-weight:600}
+.panel-note{color:#8b929a;font-size:10.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.panel-body{height:236px}
+.panel-body svg{display:block;width:100%;height:100%}
+.cl-card{--cl-ink:var(--dsw-alias-label-primary,#1f2329);--cl-dim:var(--dsw-alias-label-secondary,#5b6169);--cl-faint:var(--dsw-alias-label-tertiary,#8b929a);--cl-line:var(--dsw-alias-border-l1,rgba(15,23,42,.1));--cl-surface:var(--dsw-alias-bg-layer-1,rgba(128,128,128,.05));--cl-tint:var(--dsw-alias-state-business-primary,#3b6ef0);border:.5px solid var(--cl-line);border-radius:14px;padding:14px 16px 12px;margin:8px 0;background:var(--cl-surface);color:var(--cl-ink);font-size:13px;line-height:1.5}
+.cl-head{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.cl-title{font-weight:600;font-size:14.5px;letter-spacing:-.01em}
+.cl-note{color:var(--cl-dim);font-size:11.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cl-src{flex:none;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;color:var(--cl-faint);border:.5px solid var(--cl-line);border-radius:6px;padding:1px 7px;white-space:nowrap}
+.cl-bar{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;margin-bottom:10px}
+.cl-types{display:inline-flex;align-items:center;gap:2px;padding:2px;border-radius:9px;background:rgba(128,128,128,.1)}
+.cl-grp{display:inline-flex;align-items:center;gap:3px;flex-wrap:wrap}
+.cl-lab{color:var(--cl-faint);font-size:11px;white-space:nowrap}
+.cl-btn{border:0;background:transparent;color:var(--cl-dim);border-radius:7px;padding:3px 8px;font-size:12px;font-family:inherit;line-height:1.5;cursor:pointer;transition:background .15s ease,color .15s ease}
+.cl-btn:hover{background:rgba(128,128,128,.16);color:var(--cl-ink)}
+.cl-btn[data-on="1"]{background:color-mix(in srgb,var(--cl-tint) 14%,transparent);color:var(--cl-tint);font-weight:600}
+.cl-sel{border:0;background:transparent;color:var(--cl-ink);border-radius:7px;padding:3px 5px;font-size:12px;font-family:inherit;max-width:190px;cursor:pointer}
+.cl-sel:hover{background:rgba(128,128,128,.16)}
+.cl-sel option{color:initial;background:#fff}
+.cl-rng{vertical-align:middle;width:104px;accent-color:var(--cl-tint)}
+.cl-chart{width:100%;height:340px;min-height:180px}
+.cl-resize{height:8px;cursor:ns-resize;color:var(--cl-faint);opacity:.45;text-align:center;font-size:9px;user-select:none;letter-spacing:2px}
+.cl-resize:hover{opacity:.85}
+.cl-tblwrap{max-height:340px;overflow:auto;border:.5px solid var(--cl-line);border-radius:10px}
+.cl-tbl{border-collapse:collapse;width:100%;font-size:12px;font-variant-numeric:tabular-nums}
+.cl-tbl th,.cl-tbl td{border-bottom:.5px solid var(--cl-line);padding:4px 10px;text-align:left;white-space:nowrap}
+.cl-tbl th{position:sticky;top:0;background:var(--cl-surface);backdrop-filter:blur(6px);font-weight:600;color:var(--cl-dim)}
+.cl-tbl tr:hover td{background:rgba(128,128,128,.08)}
+.cl-foot{display:flex;gap:10px;align-items:center;margin-top:8px;font-size:11px;color:var(--cl-faint);flex-wrap:wrap}
+.cl-err{color:#e5534b;font-size:12px;padding:6px 0}
+.cl-stack{font-size:10px;opacity:.6;white-space:pre-wrap;word-break:break-all;max-height:160px;overflow:auto;margin:4px 0}
+.cl-warn{color:var(--cl-dim);font-size:11px;padding:2px 0}
+</style></head><body>
+<h1>dsh-chart-lab · 图表形式总览</h1>
+<div class="sub">九种输出形式，全部来自插件自身的 aggregate / buildOption（ECharts SSR 渲染）；配色随面板切换。</div>
+<div class="grid">
+  <section class="panel">
+    <header class="panel-head"><span class="panel-title">柱状 · 按线路堆叠</span><span class="panel-note">bar · group · stack</span></header>
+    <div class="panel-body"><svg width="372" height="236" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 372 236">
+<rect width="372" height="236" x="0" y="0" fill="none"></rect>
+<path d="M41 193.5L354 193.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<path d="M41 173.5L354 173.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<path d="M41 153.5L354 153.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<path d="M41 133.5L354 133.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<path d="M41 113.5L354 113.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<path d="M41 93.5L354 93.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<path d="M41 74.5L354 74.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<path d="M41 54.5L354 54.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<path d="M41 34.5L354 34.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" xml:space="preserve" y="-3.5" transform="translate(41 22)" fill="rgb(28,32,38)" fill-opacity="0.52">产量 (件)</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" y="7.5" transform="translate(197.5 221)" fill="rgb(28,32,38)" fill-opacity="0.52">日期</text>
+<path d="M41 193.5L354 193.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" stroke-linecap="round" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 193)" fill="rgb(28,32,38)" fill-opacity="0.52">0</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 173.125)" fill="rgb(28,32,38)" fill-opacity="0.52">100</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 153.25)" fill="rgb(28,32,38)" fill-opacity="0.52">200</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 133.375)" fill="rgb(28,32,38)" fill-opacity="0.52">300</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 113.5)" fill="rgb(28,32,38)" fill-opacity="0.52">400</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 93.625)" fill="rgb(28,32,38)" fill-opacity="0.52">500</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 73.75)" fill="rgb(28,32,38)" fill-opacity="0.52">600</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 53.875)" fill="rgb(28,32,38)" fill-opacity="0.52">700</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 34)" fill="rgb(28,32,38)" fill-opacity="0.52">800</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(63.3571 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周三</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(108.0714 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周六</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(152.7857 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周四</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(197.5 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周二</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(242.2143 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周日</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(286.9286 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周五</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(331.6429 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周一</text>
+<path d="M49.5 193l27.7 0l0 -81.5l-27.7 0Z" fill="#B23A2E" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-1"></path>
+<path d="M94.2 193l27.7 0l0 -81.5l-27.7 0Z" fill="#B23A2E" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr0-cls-1"></path>
+<path d="M138.9 193l27.7 0l0 -63.6l-27.7 0Z" fill="#B23A2E" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr0-cls-1"></path>
+<path d="M183.6 193l27.7 0l0 -72.5l-27.7 0Z" fill="#B23A2E" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr0-cls-1"></path>
+<path d="M228.4 193l27.7 0l0 -63.6l-27.7 0Z" fill="#B23A2E" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr0-cls-1"></path>
+<path d="M273.1 193l27.7 0l0 -72.5l-27.7 0Z" fill="#B23A2E" ecmeta_series_index="0" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr0-cls-1"></path>
+<path d="M317.8 193l27.7 0l0 -63.6l-27.7 0Z" fill="#B23A2E" ecmeta_series_index="0" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr0-cls-1"></path>
+<path d="M54.5 44.7L72.2 44.7A5 5 0 0 1 77.2 49.7L77.2 111.5L49.5 111.5L49.5 49.7A5 5 0 0 1 54.5 44.7Z" fill="#33587D" ecmeta_series_index="1" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-2"></path>
+<path d="M99.2 52.3L116.9 52.3A5 5 0 0 1 121.9 57.3L121.9 111.5L94.2 111.5L94.2 57.3A5 5 0 0 1 99.2 52.3Z" fill="#33587D" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr0-cls-2"></path>
+<path d="M143.9 55.1L161.6 55.1A5 5 0 0 1 166.6 60.1L166.6 129.4L138.9 129.4L138.9 60.1A5 5 0 0 1 143.9 55.1Z" fill="#33587D" ecmeta_series_index="1" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr0-cls-2"></path>
+<path d="M188.6 61.2L206.4 61.2A5 5 0 0 1 211.4 66.2L211.4 120.5L183.6 120.5L183.6 66.2A5 5 0 0 1 188.6 61.2Z" fill="#33587D" ecmeta_series_index="1" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr0-cls-2"></path>
+<path d="M233.4 62.6L251.1 62.6A5 5 0 0 1 256.1 67.6L256.1 129.4L228.4 129.4L228.4 67.6A5 5 0 0 1 233.4 62.6Z" fill="#33587D" ecmeta_series_index="1" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr0-cls-2"></path>
+<path d="M278.1 68.8L295.8 68.8A5 5 0 0 1 300.8 73.8L300.8 120.5L273.1 120.5L273.1 73.8A5 5 0 0 1 278.1 68.8Z" fill="#33587D" ecmeta_series_index="1" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr0-cls-2"></path>
+<path d="M322.8 77.7L340.5 77.7A5 5 0 0 1 345.5 82.7L345.5 129.4L317.8 129.4L317.8 82.7A5 5 0 0 1 322.8 77.7Z" fill="#33587D" ecmeta_series_index="1" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr0-cls-2"></path>
+<path d="M-5 -8l96 0l0 25l-96 0Z" transform="translate(279 10)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#b7b9be" stroke-width="0" class="zr0-cls-0"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(279 10)" fill="#B23A2E" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" xml:space="preserve" x="14" y="4.5" transform="translate(279 10)" fill="rgb(28,32,38)" fill-opacity="0.52">A 线</text>
+<path d="M0 0l35 0l0 9l-35 0Z" transform="translate(279 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" class="zr0-cls-3"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(330 10)" fill="#33587D" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" xml:space="preserve" x="14" y="4.5" transform="translate(330 10)" fill="rgb(28,32,38)" fill-opacity="0.52">B 线</text>
+<path d="M0 0l35 0l0 9l-35 0Z" transform="translate(330 10)" fill="none" pointer-events="visible" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="legend" class="zr0-cls-3"></path>
+<style ><![CDATA[
+.zr0-cls-0:hover {
+pointer-events:none;
+}
+.zr0-cls-1:hover {
+cursor:pointer;
+fill:rgba(195,63,50,1);
+}
+.zr0-cls-2:hover {
+cursor:pointer;
+fill:rgba(56,96,137,1);
+}
+.zr0-cls-3:hover {
+cursor:pointer;
+fill:rgba(0,0,0,0);
+}
+
+]]>
+
+</style>
+</svg></div>
+  </section>
+  <section class="panel">
+    <header class="panel-head"><span class="panel-title">条形 · 横向比较</span><span class="panel-note">hbar</span></header>
+    <div class="panel-body"><svg width="372" height="236" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 372 236">
+<rect width="372" height="236" x="0" y="0" fill="none"></rect>
+<path d="M44.5 34L44.5 193" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr1-cls-4"></path>
+<path d="M106.5 34L106.5 193" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr1-cls-4"></path>
+<path d="M168.5 34L168.5 193" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr1-cls-4"></path>
+<path d="M230.5 34L230.5 193" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr1-cls-4"></path>
+<path d="M292.5 34L292.5 193" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr1-cls-4"></path>
+<path d="M354.5 34L354.5 193" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr1-cls-4"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" y="-9.5" transform="translate(44 20)" fill="rgb(28,32,38)" fill-opacity="0.52">日期</text>
+<path d="M44.5 193L44.5 34" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" stroke-linecap="round" class="zr1-cls-4"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" xml:space="preserve" y="7.5" transform="translate(199 219)" fill="rgb(28,32,38)" fill-opacity="0.52">产量 (件)</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(34 181.6429)" fill="rgb(28,32,38)" fill-opacity="0.52">周三</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(34 158.9286)" fill="rgb(28,32,38)" fill-opacity="0.52">周六</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(34 136.2143)" fill="rgb(28,32,38)" fill-opacity="0.52">周二</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(34 113.5)" fill="rgb(28,32,38)" fill-opacity="0.52">周五</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(34 90.7857)" fill="rgb(28,32,38)" fill-opacity="0.52">周一</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(34 68.0714)" fill="rgb(28,32,38)" fill-opacity="0.52">周四</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(34 45.3571)" fill="rgb(28,32,38)" fill-opacity="0.52">周日</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(44 203)" fill="rgb(28,32,38)" fill-opacity="0.52">0</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(106 203)" fill="rgb(28,32,38)" fill-opacity="0.52">100</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(168 203)" fill="rgb(28,32,38)" fill-opacity="0.52">200</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(230 203)" fill="rgb(28,32,38)" fill-opacity="0.52">300</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(292 203)" fill="rgb(28,32,38)" fill-opacity="0.52">400</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(354 203)" fill="rgb(28,32,38)" fill-opacity="0.52">500</text>
+<path d="M49 174.6L293.2 174.6A5 5 0 0 1 298.2 179.6L298.2 188.7L44 188.7L44 179.6A5 5 0 0 1 49 174.6Z" fill="#5b8ff9" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr1-cls-5"></path>
+<path d="M49 151.9L293.2 151.9A5 5 0 0 1 298.2 156.9L298.2 166L44 166L44 156.9A5 5 0 0 1 49 151.9Z" fill="#5b8ff9" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr1-cls-5"></path>
+<path d="M49 129.2L265.3 129.2A5 5 0 0 1 270.3 134.2L270.3 143.3L44 143.3L44 134.2A5 5 0 0 1 49 129.2Z" fill="#5b8ff9" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr1-cls-5"></path>
+<path d="M49 106.5L265.3 106.5A5 5 0 0 1 270.3 111.5L270.3 120.5L44 120.5L44 111.5A5 5 0 0 1 49 106.5Z" fill="#5b8ff9" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr1-cls-5"></path>
+<path d="M49 83.7L237.4 83.7A5 5 0 0 1 242.4 88.7L242.4 97.8L44 97.8L44 88.7A5 5 0 0 1 49 83.7Z" fill="#5b8ff9" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr1-cls-5"></path>
+<path d="M49 61L237.4 61A5 5 0 0 1 242.4 66L242.4 75.1L44 75.1L44 66A5 5 0 0 1 49 61Z" fill="#5b8ff9" ecmeta_series_index="0" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr1-cls-5"></path>
+<path d="M49 38.3L237.4 38.3A5 5 0 0 1 242.4 43.3L242.4 52.4L44 52.4L44 43.3A5 5 0 0 1 49 38.3Z" fill="#5b8ff9" ecmeta_series_index="0" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr1-cls-5"></path>
+<path d="M-5 -8l38 0l0 25l-38 0Z" transform="translate(337 10)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#b7b9be" stroke-width="0" class="zr1-cls-4"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(337 10)" fill="#5b8ff9" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr1-cls-4"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(337 10)" fill="rgb(28,32,38)" fill-opacity="0.52">产量</text>
+<path d="M0 0l28 0l0 9l-28 0Z" transform="translate(337 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" class="zr1-cls-6"></path>
+<style ><![CDATA[
+.zr1-cls-4:hover {
+pointer-events:none;
+}
+.zr1-cls-5:hover {
+cursor:pointer;
+fill:rgba(100,157,255,1);
+}
+.zr1-cls-6:hover {
+cursor:pointer;
+fill:rgba(0,0,0,0);
+}
+
+]]>
+
+</style>
+</svg></div>
+  </section>
+  <section class="panel">
+    <header class="panel-head"><span class="panel-title">折线 · 双指标</span><span class="panel-note">line · 2 metrics</span></header>
+    <div class="panel-body"><svg width="372" height="236" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 372 236">
+<rect width="372" height="236" x="0" y="0" fill="none"></rect>
+<path d="M41 193.5L354 193.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr2-cls-7"></path>
+<path d="M41 161.5L354 161.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr2-cls-7"></path>
+<path d="M41 129.5L354 129.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr2-cls-7"></path>
+<path d="M41 97.5L354 97.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr2-cls-7"></path>
+<path d="M41 66.5L354 66.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr2-cls-7"></path>
+<path d="M41 34.5L354 34.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr2-cls-7"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" y="-3.5" transform="translate(41 22)" fill="rgb(28,32,38)" fill-opacity="0.52">数值</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" y="7.5" transform="translate(197.5 221)" fill="rgb(28,32,38)" fill-opacity="0.52">日期</text>
+<path d="M41 193.5L354 193.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" stroke-linecap="round" class="zr2-cls-7"></path>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 193)" fill="rgb(28,32,38)" fill-opacity="0.52">0</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 161.2)" fill="rgb(28,32,38)" fill-opacity="0.52">100</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 129.4)" fill="rgb(28,32,38)" fill-opacity="0.52">200</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 97.6)" fill="rgb(28,32,38)" fill-opacity="0.52">300</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 65.8)" fill="rgb(28,32,38)" fill-opacity="0.52">400</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 34)" fill="rgb(28,32,38)" fill-opacity="0.52">500</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(63.3571 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周三</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(108.0714 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周六</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(152.7857 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周二</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(197.5 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周五</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(242.2143 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周一</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(286.9286 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周四</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(331.6429 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周日</text>
+<g clip-path="url(#zr2-c0)">
+<path d="M63.4 62.6C63.4 62.6 86.3 62.6 108.1 62.6C131 62.6 129.9 76.9 152.8 76.9C174.6 76.9 175.7 76.9 197.5 76.9C220.4 76.9 219.3 91.2 242.2 91.2C264 91.2 264.6 91.2 286.9 91.2C309.3 91.2 331.6 91.2 331.6 91.2" fill="none" pointer-events="visible" stroke="#6E9095" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel" class="zr2-cls-9"></path>
+</g>
+<g clip-path="url(#zr2-c1)">
+<path d="M63.4 165C63.4 165 85.7 162.2 108.1 162.2C130.4 162.2 130.5 162.2 152.8 162.2C175.2 162.2 175.1 165 197.5 165C219.8 165 219.9 165 242.2 165C264.6 165 264.6 162.2 286.9 162.2C309.3 162.2 331.6 165 331.6 165" fill="none" pointer-events="visible" stroke="#7C9A8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel" class="zr2-cls-9"></path>
+</g>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,63.3571,62.62)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr2-cls-10"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,108.0714,62.62)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr2-cls-10"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,152.7857,76.93)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr2-cls-10"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,197.5,76.93)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr2-cls-10"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,242.2143,91.24)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr2-cls-10"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,286.9286,91.24)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr2-cls-10"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,331.6429,91.24)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr2-cls-10"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,63.3571,165.016)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr2-cls-11"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,108.0714,162.154)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr2-cls-11"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,152.7857,162.154)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr2-cls-11"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,197.5,165.016)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr2-cls-11"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,242.2143,165.016)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr2-cls-11"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,286.9286,162.154)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr2-cls-11"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,331.6429,165.016)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr2-cls-11"></path>
+<path d="M-5 -8l82 0l0 25l-82 0Z" transform="translate(293 10)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#b7b9be" stroke-width="0" class="zr2-cls-7"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(293 10)" fill="#6E9095" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr2-cls-7"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(293 10)" fill="rgb(28,32,38)" fill-opacity="0.52">产量</text>
+<path d="M0 0l28 0l0 9l-28 0Z" transform="translate(293 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" class="zr2-cls-12"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(337 10)" fill="#7C9A8A" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr2-cls-7"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(337 10)" fill="rgb(28,32,38)" fill-opacity="0.52">能耗</text>
+<path d="M0 0l28 0l0 9l-28 0Z" transform="translate(337 10)" fill="none" pointer-events="visible" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="legend" class="zr2-cls-12"></path>
+<defs >
+<clipPath id="zr2-c0">
+<path d="M40 33l315 0l0 161l-315 0Z" fill="#000" class="zr2-cls-8"></path>
+</clipPath>
+<clipPath id="zr2-c1">
+<path d="M40 33l315 0l0 161l-315 0Z" fill="#000" class="zr2-cls-8"></path>
+</clipPath>
+</defs>
+<style ><![CDATA[
+.zr2-cls-7:hover {
+pointer-events:none;
+}
+.zr2-cls-8:hover {
+cursor:pointer;
+fill:rgba(0,0,0,1);
+}
+.zr2-cls-9:hover {
+cursor:pointer;
+}
+.zr2-cls-10:hover {
+cursor:pointer;
+fill:rgba(121,158,163,1);
+}
+.zr2-cls-11:hover {
+cursor:pointer;
+fill:rgba(136,169,151,1);
+}
+.zr2-cls-12:hover {
+cursor:pointer;
+fill:rgba(0,0,0,0);
+}
+
+]]>
+
+</style>
+</svg></div>
+  </section>
+  <section class="panel">
+    <header class="panel-head"><span class="panel-title">面积 · 分线路</span><span class="panel-note">area · stack</span></header>
+    <div class="panel-body"><svg width="372" height="236" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 372 236">
+<rect width="372" height="236" x="0" y="0" fill="none"></rect>
+<path d="M41 193.5L354 193.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr3-cls-13"></path>
+<path d="M41 173.5L354 173.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr3-cls-13"></path>
+<path d="M41 153.5L354 153.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr3-cls-13"></path>
+<path d="M41 133.5L354 133.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr3-cls-13"></path>
+<path d="M41 113.5L354 113.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr3-cls-13"></path>
+<path d="M41 93.5L354 93.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr3-cls-13"></path>
+<path d="M41 74.5L354 74.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr3-cls-13"></path>
+<path d="M41 54.5L354 54.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr3-cls-13"></path>
+<path d="M41 34.5L354 34.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr3-cls-13"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" xml:space="preserve" y="-3.5" transform="translate(41 22)" fill="rgb(28,32,38)" fill-opacity="0.52">产量 (件)</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" y="7.5" transform="translate(197.5 221)" fill="rgb(28,32,38)" fill-opacity="0.52">日期</text>
+<path d="M41 193.5L354 193.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" stroke-linecap="round" class="zr3-cls-13"></path>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 193)" fill="rgb(28,32,38)" fill-opacity="0.52">0</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 173.125)" fill="rgb(28,32,38)" fill-opacity="0.52">100</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 153.25)" fill="rgb(28,32,38)" fill-opacity="0.52">200</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 133.375)" fill="rgb(28,32,38)" fill-opacity="0.52">300</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 113.5)" fill="rgb(28,32,38)" fill-opacity="0.52">400</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 93.625)" fill="rgb(28,32,38)" fill-opacity="0.52">500</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 73.75)" fill="rgb(28,32,38)" fill-opacity="0.52">600</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 53.875)" fill="rgb(28,32,38)" fill-opacity="0.52">700</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" transform="translate(31 34)" fill="rgb(28,32,38)" fill-opacity="0.52">800</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(63.3571 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周三</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(108.0714 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周六</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(152.7857 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周四</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(197.5 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周二</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(242.2143 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周日</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(286.9286 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周五</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(331.6429 203)" fill="rgb(28,32,38)" fill-opacity="0.52">周一</text>
+<g clip-path="url(#zr3-c0)">
+<path d="M63.4 111.5C63.4 111.5 86.5 111.5 108.1 111.5C131.3 111.5 129.8 129.4 152.8 129.4C174.5 129.4 175.1 120.5 197.5 120.5C219.9 120.5 219.9 129.4 242.2 129.4C264.6 129.4 264.6 120.5 286.9 120.5C309.3 120.5 331.6 129.4 331.6 129.4L331.6 193L286.9 193L242.2 193L197.5 193L152.8 193L108.1 193L63.4 193Z" fill="#9A8C98" fill-opacity="0.18" class="zr3-cls-15"></path>
+</g>
+<g clip-path="url(#zr3-c1)">
+<path d="M63.4 44.7C63.4 44.7 85.6 49.7 108.1 52.3C130.3 54.9 130.5 52.8 152.8 55.1C175.2 57.3 175 59.8 197.5 61.2C219.8 62.6 220 61.2 242.2 62.6C264.7 64 264.7 65 286.9 68.8C309.4 72.6 331.6 77.7 331.6 77.7L331.6 129.4C331.6 129.4 309.3 120.5 286.9 120.5C264.6 120.5 264.6 129.4 242.2 129.4C219.9 129.4 219.9 120.5 197.5 120.5C175.1 120.5 174.5 129.4 152.8 129.4C129.8 129.4 131.3 111.5 108.1 111.5C86.5 111.5 63.4 111.5 63.4 111.5Z" fill="#8A9A8B" fill-opacity="0.18" class="zr3-cls-16"></path>
+</g>
+<g clip-path="url(#zr3-c0)">
+<path d="M63.4 111.5C63.4 111.5 86.5 111.5 108.1 111.5C131.3 111.5 129.8 129.4 152.8 129.4C174.5 129.4 175.1 120.5 197.5 120.5C219.9 120.5 219.9 129.4 242.2 129.4C264.6 129.4 264.6 120.5 286.9 120.5C309.3 120.5 331.6 129.4 331.6 129.4" fill="none" pointer-events="visible" stroke="#9A8C98" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel" class="zr3-cls-17"></path>
+</g>
+<g clip-path="url(#zr3-c1)">
+<path d="M63.4 44.7C63.4 44.7 85.6 49.7 108.1 52.3C130.3 54.9 130.5 52.8 152.8 55.1C175.2 57.3 175 59.8 197.5 61.2C219.8 62.6 220 61.2 242.2 62.6C264.7 64 264.7 65 286.9 68.8C309.4 72.6 331.6 77.7 331.6 77.7" fill="none" pointer-events="visible" stroke="#8A9A8B" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel" class="zr3-cls-17"></path>
+</g>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,63.3571,111.5125)" fill="#9A8C98" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr3-cls-15"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,108.0714,111.5125)" fill="#9A8C98" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr3-cls-15"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,152.7857,129.4)" fill="#9A8C98" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr3-cls-15"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,197.5,120.4563)" fill="#9A8C98" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr3-cls-15"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,242.2143,129.4)" fill="#9A8C98" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr3-cls-15"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,286.9286,120.4563)" fill="#9A8C98" ecmeta_series_index="0" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr3-cls-15"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,331.6429,129.4)" fill="#9A8C98" ecmeta_series_index="0" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr3-cls-15"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,63.3571,44.7325)" fill="#8A9A8B" ecmeta_series_index="1" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr3-cls-16"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,108.0714,52.285)" fill="#8A9A8B" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr3-cls-16"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,152.7857,55.0675)" fill="#8A9A8B" ecmeta_series_index="1" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr3-cls-16"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,197.5,61.2287)" fill="#8A9A8B" ecmeta_series_index="1" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr3-cls-16"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,242.2143,62.62)" fill="#8A9A8B" ecmeta_series_index="1" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr3-cls-16"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,286.9286,68.7813)" fill="#8A9A8B" ecmeta_series_index="1" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr3-cls-16"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(2.5,0,0,2.5,331.6429,77.725)" fill="#8A9A8B" ecmeta_series_index="1" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr3-cls-16"></path>
+<path d="M-5 -8l96 0l0 25l-96 0Z" transform="translate(279 10)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#b7b9be" stroke-width="0" class="zr3-cls-13"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(279 10)" fill="#9A8C98" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr3-cls-13"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" xml:space="preserve" x="14" y="4.5" transform="translate(279 10)" fill="rgb(28,32,38)" fill-opacity="0.52">A 线</text>
+<path d="M0 0l35 0l0 9l-35 0Z" transform="translate(279 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" class="zr3-cls-18"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(330 10)" fill="#8A9A8B" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr3-cls-13"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" xml:space="preserve" x="14" y="4.5" transform="translate(330 10)" fill="rgb(28,32,38)" fill-opacity="0.52">B 线</text>
+<path d="M0 0l35 0l0 9l-35 0Z" transform="translate(330 10)" fill="none" pointer-events="visible" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="legend" class="zr3-cls-18"></path>
+<defs >
+<clipPath id="zr3-c0">
+<path d="M40 33l315 0l0 161l-315 0Z" fill="#000" class="zr3-cls-14"></path>
+</clipPath>
+<clipPath id="zr3-c1">
+<path d="M40 33l315 0l0 161l-315 0Z" fill="#000" class="zr3-cls-14"></path>
+</clipPath>
+</defs>
+<style ><![CDATA[
+.zr3-cls-13:hover {
+pointer-events:none;
+}
+.zr3-cls-14:hover {
+cursor:pointer;
+fill:rgba(0,0,0,1);
+}
+.zr3-cls-15:hover {
+cursor:pointer;
+fill:rgba(169,154,167,1);
+}
+.zr3-cls-16:hover {
+cursor:pointer;
+fill:rgba(151,169,152,1);
+}
+.zr3-cls-17:hover {
+cursor:pointer;
+}
+.zr3-cls-18:hover {
+cursor:pointer;
+fill:rgba(0,0,0,0);
+}
+
+]]>
+
+</style>
+</svg></div>
+  </section>
+  <section class="panel">
+    <header class="panel-head"><span class="panel-title">饼图 · 地区份额</span><span class="panel-note">pie</span></header>
+    <div class="panel-body"><svg width="372" height="236" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 372 236">
+<rect width="372" height="236" x="0" y="0" fill="none"></rect>
+<polyline points="254 102.9 268 97.3 298 97.3" fill="none" pointer-events="visible" stroke="#3D7A5D" class="zr4-cls-19"></polyline>
+<polyline points="186 203 186 218 156 218" fill="none" pointer-events="visible" stroke="#2C6C8F" class="zr4-cls-19"></polyline>
+<polyline points="115.7 150.2 101.3 154.4 71.3 154.4" fill="none" pointer-events="visible" stroke="#A8503A" class="zr4-cls-19"></polyline>
+<polyline points="126.8 86.8 114.7 78 84.7 78" fill="none" pointer-events="visible" stroke="#7C4A33" class="zr4-cls-19"></polyline>
+<polyline points="165.6 59.5 161.4 45.1 131.4 45.1" fill="none" pointer-events="visible" stroke="#C0932C" class="zr4-cls-19"></polyline>
+<path d="M186 56.6A73.2 73.2 0 0 1 236.1 183.1L186 129.8Z" fill="#3D7A5D" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr4-cls-20"></path>
+<path d="M236.1 183.1A73.2 73.2 0 0 1 135.9 183.1L186 129.8Z" fill="#2C6C8F" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr4-cls-21"></path>
+<path d="M135.9 183.1A73.2 73.2 0 0 1 115.1 111.6L186 129.8Z" fill="#A8503A" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr4-cls-22"></path>
+<path d="M115.1 111.6A73.2 73.2 0 0 1 146.8 68L186 129.8Z" fill="#7C4A33" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr4-cls-23"></path>
+<path d="M146.8 68A73.2 73.2 0 0 1 186 56.6L186 129.8Z" fill="#C0932C" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr4-cls-24"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11.5px;font-family:inherit;" transform="translate(302.9691 97.3461)" fill="rgb(28,32,38)" fill-opacity="0.84">华东</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11.5px;font-family:inherit;" transform="translate(151 217.96)" fill="rgb(28,32,38)" fill-opacity="0.84">华北</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11.5px;font-family:inherit;" transform="translate(66.3405 154.3959)" fill="rgb(28,32,38)" fill-opacity="0.84">华南</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11.5px;font-family:inherit;" transform="translate(79.6771 77.9809)" fill="rgb(28,32,38)" fill-opacity="0.84">西南</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11.5px;font-family:inherit;" transform="translate(126.4041 45.1405)" fill="rgb(28,32,38)" fill-opacity="0.84">东北</text>
+<path d="M-5 -8l214 0l0 25l-214 0Z" transform="translate(161 10)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#b7b9be" stroke-width="0" class="zr4-cls-25"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(161 10)" fill="#3D7A5D" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr4-cls-25"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(161 10)" fill="rgb(28,32,38)" fill-opacity="0.52">华东</text>
+<path d="M0 0l28 0l0 9l-28 0Z" transform="translate(161 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" class="zr4-cls-26"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(205 10)" fill="#2C6C8F" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr4-cls-25"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(205 10)" fill="rgb(28,32,38)" fill-opacity="0.52">华北</text>
+<path d="M0 0l28 0l0 9l-28 0Z" transform="translate(205 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="legend" class="zr4-cls-26"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(249 10)" fill="#A8503A" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr4-cls-25"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(249 10)" fill="rgb(28,32,38)" fill-opacity="0.52">华南</text>
+<path d="M0 0l28 0l0 9l-28 0Z" transform="translate(249 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="legend" class="zr4-cls-26"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(293 10)" fill="#7C4A33" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr4-cls-25"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(293 10)" fill="rgb(28,32,38)" fill-opacity="0.52">西南</text>
+<path d="M0 0l28 0l0 9l-28 0Z" transform="translate(293 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="legend" class="zr4-cls-26"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(337 10)" fill="#C0932C" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr4-cls-25"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(337 10)" fill="rgb(28,32,38)" fill-opacity="0.52">东北</text>
+<path d="M0 0l28 0l0 9l-28 0Z" transform="translate(337 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="legend" class="zr4-cls-26"></path>
+<style ><![CDATA[
+.zr4-cls-19:hover {
+cursor:pointer;
+}
+.zr4-cls-20:hover {
+cursor:pointer;
+fill:rgba(67,134,102,1);
+}
+.zr4-cls-21:hover {
+cursor:pointer;
+fill:rgba(48,118,157,1);
+}
+.zr4-cls-22:hover {
+cursor:pointer;
+fill:rgba(184,88,63,1);
+}
+.zr4-cls-23:hover {
+cursor:pointer;
+fill:rgba(136,81,56,1);
+}
+.zr4-cls-24:hover {
+cursor:pointer;
+fill:rgba(211,161,48,1);
+}
+.zr4-cls-25:hover {
+pointer-events:none;
+}
+.zr4-cls-26:hover {
+cursor:pointer;
+fill:rgba(0,0,0,0);
+}
+
+]]>
+
+</style>
+</svg></div>
+  </section>
+  <section class="panel">
+    <header class="panel-head"><span class="panel-title">环图 · 设备占比</span><span class="panel-note">donut</span></header>
+    <div class="panel-body"><svg width="372" height="236" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 372 236">
+<rect width="372" height="236" x="0" y="0" fill="none"></rect>
+<polyline points="247.1 77.8 258.6 68.1 288.6 68.1" fill="none" pointer-events="visible" stroke="#2E86AB" class="zr5-cls-27"></polyline>
+<polyline points="233.2 194.7 242 206.9 272 206.9" fill="none" pointer-events="visible" stroke="#E4572E" class="zr5-cls-27"></polyline>
+<polyline points="130.6 187.9 120.3 198.7 90.3 198.7" fill="none" pointer-events="visible" stroke="#17B890" class="zr5-cls-27"></polyline>
+<polyline points="109.9 104.3 95.7 99.5 65.7 99.5" fill="none" pointer-events="visible" stroke="#F4A259" class="zr5-cls-27"></polyline>
+<polyline points="157.6 54.8 152.3 40.7 122.3 40.7" fill="none" pointer-events="visible" stroke="#6A4C93" class="zr5-cls-27"></polyline>
+<path d="M186 49.6A80.2 80.2 0 0 1 265.2 142.7L234.9 137.8A49.6 49.6 0 0 0 186 80.2Z" fill="#2E86AB" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr5-cls-28"></path>
+<path d="M265.2 142.7A80.2 80.2 0 0 1 173.8 209.1L178.5 178.8A49.6 49.6 0 0 0 234.9 137.8Z" fill="#E4572E" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr5-cls-29"></path>
+<path d="M173.8 209.1A80.2 80.2 0 0 1 107.4 145.7L137.4 139.6A49.6 49.6 0 0 0 178.5 178.8Z" fill="#17B890" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr5-cls-30"></path>
+<path d="M107.4 145.7A80.2 80.2 0 0 1 132.9 69.7L153.2 92.7A49.6 49.6 0 0 0 137.4 139.6Z" fill="#F4A259" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr5-cls-31"></path>
+<path d="M132.9 69.7A80.2 80.2 0 0 1 186 49.6L186 80.2A49.6 49.6 0 0 0 153.2 92.7Z" fill="#6A4C93" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr5-cls-32"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11.5px;font-family:inherit;" transform="translate(293.5681 68.1191)" fill="rgb(28,32,38)" fill-opacity="0.84">冷冻机</text>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11.5px;font-family:inherit;" transform="translate(276.9807 206.8508)" fill="rgb(28,32,38)" fill-opacity="0.84">注塑机</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11.5px;font-family:inherit;" transform="translate(85.2769 198.7284)" fill="rgb(28,32,38)" fill-opacity="0.84">空压机</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11.5px;font-family:inherit;" transform="translate(60.7057 99.5083)" fill="rgb(28,32,38)" fill-opacity="0.84">风机</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11.5px;font-family:inherit;" transform="translate(117.2927 40.7243)" fill="rgb(28,32,38)" fill-opacity="0.84">水泵</text>
+<path d="M-5 -8l235 0l0 25l-235 0Z" transform="translate(140 10)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#b7b9be" stroke-width="0" class="zr5-cls-33"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(140 10)" fill="#2E86AB" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr5-cls-33"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(140 10)" fill="rgb(28,32,38)" fill-opacity="0.52">冷冻机</text>
+<path d="M0 0l35 0l0 9l-35 0Z" transform="translate(140 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" class="zr5-cls-34"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(191 10)" fill="#E4572E" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr5-cls-33"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(191 10)" fill="rgb(28,32,38)" fill-opacity="0.52">注塑机</text>
+<path d="M0 0l35 0l0 9l-35 0Z" transform="translate(191 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="legend" class="zr5-cls-34"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(242 10)" fill="#17B890" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr5-cls-33"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(242 10)" fill="rgb(28,32,38)" fill-opacity="0.52">空压机</text>
+<path d="M0 0l35 0l0 9l-35 0Z" transform="translate(242 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="legend" class="zr5-cls-34"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(293 10)" fill="#F4A259" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr5-cls-33"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(293 10)" fill="rgb(28,32,38)" fill-opacity="0.52">风机</text>
+<path d="M0 0l28 0l0 9l-28 0Z" transform="translate(293 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="legend" class="zr5-cls-34"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(337 10)" fill="#6A4C93" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr5-cls-33"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(337 10)" fill="rgb(28,32,38)" fill-opacity="0.52">水泵</text>
+<path d="M0 0l28 0l0 9l-28 0Z" transform="translate(337 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="legend" class="zr5-cls-34"></path>
+<style ><![CDATA[
+.zr5-cls-27:hover {
+cursor:pointer;
+}
+.zr5-cls-28:hover {
+cursor:pointer;
+fill:rgba(50,147,188,1);
+}
+.zr5-cls-29:hover {
+cursor:pointer;
+fill:rgba(250,95,50,1);
+}
+.zr5-cls-30:hover {
+cursor:pointer;
+fill:rgba(25,202,158,1);
+}
+.zr5-cls-31:hover {
+cursor:pointer;
+fill:rgba(255,178,97,1);
+}
+.zr5-cls-32:hover {
+cursor:pointer;
+fill:rgba(116,83,161,1);
+}
+.zr5-cls-33:hover {
+pointer-events:none;
+}
+.zr5-cls-34:hover {
+cursor:pointer;
+fill:rgba(0,0,0,0);
+}
+
+]]>
+
+</style>
+</svg></div>
+  </section>
+  <section class="panel">
+    <header class="panel-head"><span class="panel-title">散点 · 负载分布</span><span class="panel-note">scatter</span></header>
+    <div class="panel-body"><svg width="372" height="236" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 372 236">
+<rect width="372" height="236" x="0" y="0" fill="none"></rect>
+<path d="M39 191.5L354 191.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr6-cls-35"></path>
+<path d="M39 160.5L354 160.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr6-cls-35"></path>
+<path d="M39 130.5L354 130.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr6-cls-35"></path>
+<path d="M39 99.5L354 99.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr6-cls-35"></path>
+<path d="M39 68.5L354 68.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr6-cls-35"></path>
+<path d="M39 38.5L354 38.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" class="zr6-cls-35"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="-3.5" transform="translate(39 28)" fill="rgb(28,32,38)" fill-opacity="0.63">数值</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(196.5 217)" fill="rgb(28,32,38)" fill-opacity="0.63">设备</text>
+<path d="M39 191.5L354 191.5" fill="none" pointer-events="visible" stroke="rgb(15,23,42)" stroke-opacity="0.075" stroke-linecap="round" class="zr6-cls-35"></path>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:inherit;" transform="translate(31 191)" fill="rgb(28,32,38)" fill-opacity="0.84">0</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:inherit;" transform="translate(31 160.4)" fill="rgb(28,32,38)" fill-opacity="0.84">20</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:inherit;" transform="translate(31 129.8)" fill="rgb(28,32,38)" fill-opacity="0.84">40</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:inherit;" transform="translate(31 99.2)" fill="rgb(28,32,38)" fill-opacity="0.84">60</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:inherit;" transform="translate(31 68.6)" fill="rgb(28,32,38)" fill-opacity="0.84">80</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:inherit;" transform="translate(31 38)" fill="rgb(28,32,38)" fill-opacity="0.84">100</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:inherit;" y="3.5" transform="translate(70.5 199)" fill="rgb(28,32,38)" fill-opacity="0.84">冷冻机</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:inherit;" y="3.5" transform="translate(133.5 199)" fill="rgb(28,32,38)" fill-opacity="0.84">注塑机</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:inherit;" y="3.5" transform="translate(196.5 199)" fill="rgb(28,32,38)" fill-opacity="0.84">空压机</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:inherit;" y="3.5" transform="translate(259.5 199)" fill="rgb(28,32,38)" fill-opacity="0.84">风机</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:inherit;" y="3.5" transform="translate(322.5 199)" fill="rgb(28,32,38)" fill-opacity="0.84">水泵</text>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4.5,0,0,4.5,70.5,51.77)" fill="#B23A2E" fill-opacity="0.9" stroke="rgb(255,255,255)" stroke-width="0.2222222222222222" stroke-opacity="0.765" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr6-cls-36"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4.5,0,0,4.5,133.5,65.54)" fill="#B23A2E" fill-opacity="0.9" stroke="rgb(255,255,255)" stroke-width="0.2222222222222222" stroke-opacity="0.765" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr6-cls-36"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4.5,0,0,4.5,196.5,93.08)" fill="#B23A2E" fill-opacity="0.9" stroke="rgb(255,255,255)" stroke-width="0.2222222222222222" stroke-opacity="0.765" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr6-cls-36"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4.5,0,0,4.5,259.5,106.85)" fill="#B23A2E" fill-opacity="0.9" stroke="rgb(255,255,255)" stroke-width="0.2222222222222222" stroke-opacity="0.765" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr6-cls-36"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4.5,0,0,4.5,322.5,132.86)" fill="#B23A2E" fill-opacity="0.9" stroke="rgb(255,255,255)" stroke-width="0.2222222222222222" stroke-opacity="0.765" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr6-cls-36"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4.5,0,0,4.5,70.5,119.09)" fill="#33587D" fill-opacity="0.9" stroke="rgb(255,255,255)" stroke-width="0.2222222222222222" stroke-opacity="0.765" ecmeta_series_index="1" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr6-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4.5,0,0,4.5,133.5,97.67)" fill="#33587D" fill-opacity="0.9" stroke="rgb(255,255,255)" stroke-width="0.2222222222222222" stroke-opacity="0.765" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr6-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4.5,0,0,4.5,196.5,108.38)" fill="#33587D" fill-opacity="0.9" stroke="rgb(255,255,255)" stroke-width="0.2222222222222222" stroke-opacity="0.765" ecmeta_series_index="1" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr6-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4.5,0,0,4.5,259.5,131.33)" fill="#33587D" fill-opacity="0.9" stroke="rgb(255,255,255)" stroke-width="0.2222222222222222" stroke-opacity="0.765" ecmeta_series_index="1" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr6-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4.5,0,0,4.5,322.5,126.74)" fill="#33587D" fill-opacity="0.9" stroke="rgb(255,255,255)" stroke-width="0.2222222222222222" stroke-opacity="0.765" ecmeta_series_index="1" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr6-cls-37"></path>
+<path d="M-5 -7l84 0l0 25l-84 0Z" transform="translate(291 9)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#b7b9be" stroke-width="0" class="zr6-cls-35"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(292 10)" fill="#B23A2E" fill-opacity="0.9" stroke="rgb(255,255,255)" stroke-width="2" stroke-opacity="0.765" stroke-linecap="butt" stroke-miterlimit="10" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr6-cls-35"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(292 10)" fill="rgb(28,32,38)" fill-opacity="0.52">负载</text>
+<path d="M-1 -1l29 0l0 11l-29 0Z" transform="translate(292 10)" fill="none" pointer-events="visible" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" class="zr6-cls-38"></path>
+<path d="M9 4.5A4.5 4.5 0 1 1 9 4.1A4.5 4.5 0 0 1 9 4.5" transform="translate(337 10)" fill="#33587D" fill-opacity="0.9" stroke="rgb(255,255,255)" stroke-width="2" stroke-opacity="0.765" stroke-linecap="butt" stroke-miterlimit="10" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr6-cls-35"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:inherit;" x="14" y="4.5" transform="translate(337 10)" fill="rgb(28,32,38)" fill-opacity="0.52">温度</text>
+<path d="M-1 -1l29 0l0 11l-29 0Z" transform="translate(337 10)" fill="none" pointer-events="visible" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="legend" class="zr6-cls-38"></path>
+<style ><![CDATA[
+.zr6-cls-35:hover {
+pointer-events:none;
+}
+.zr6-cls-36:hover {
+cursor:pointer;
+fill:rgba(195,63,50,1);
+}
+.zr6-cls-37:hover {
+cursor:pointer;
+fill:rgba(56,96,137,1);
+}
+.zr6-cls-38:hover {
+cursor:pointer;
+fill:rgba(0,0,0,0);
+}
+
+]]>
+
+</style>
+</svg></div>
+  </section>
+  <section class="panel">
+    <header class="panel-head"><span class="panel-title">热力 · 班次 × 线路</span><span class="panel-note">heatmap</span></header>
+    <div class="panel-body"><svg width="372" height="236" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 372 236">
+<rect width="372" height="236" x="0" y="0" fill="none"></rect>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" xml:space="preserve" transform="translate(31 145.8333)" fill="rgb(28,32,38)" fill-opacity="0.52">A 线</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" xml:space="preserve" transform="translate(31 103.5)" fill="rgb(28,32,38)" fill-opacity="0.52">B 线</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:inherit;" xml:space="preserve" transform="translate(31 61.1667)" fill="rgb(28,32,38)" fill-opacity="0.52">C 线</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(93.1667 177)" fill="rgb(28,32,38)" fill-opacity="0.52">夜班</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(197.5 177)" fill="rgb(28,32,38)" fill-opacity="0.52">中班</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:inherit;" y="3.5" transform="translate(301.8333 177)" fill="rgb(28,32,38)" fill-opacity="0.52">早班</text>
+<path d="M44.7 124.4L141.6 124.4A4 4 0 0 1 145.6 128.4L145.6 163.2A4 4 0 0 1 141.6 167.2L44.7 167.2A4 4 0 0 1 40.7 163.2L40.7 128.4A4 4 0 0 1 44.7 124.4Z" fill="rgb(104,135,140)" stroke="rgb(255,255,255)" stroke-width="2" stroke-opacity="0.9" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr7-cls-39"></path>
+<path d="M149.1 124.4L245.9 124.4A4 4 0 0 1 249.9 128.4L249.9 163.2A4 4 0 0 1 245.9 167.2L149.1 167.2A4 4 0 0 1 145.1 163.2L145.1 128.4A4 4 0 0 1 149.1 124.4Z" fill="rgb(153,175,178)" stroke="rgb(255,255,255)" stroke-width="2" stroke-opacity="0.9" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr7-cls-40"></path>
+<path d="M253.4 124.4L350.3 124.4A4 4 0 0 1 354.3 128.4L354.3 163.2A4 4 0 0 1 350.3 167.2L253.4 167.2A4 4 0 0 1 249.4 163.2L249.4 128.4A4 4 0 0 1 253.4 124.4Z" fill="rgb(214,224,226)" stroke="rgb(255,255,255)" stroke-width="2" stroke-opacity="0.9" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr7-cls-41"></path>
+<path d="M44.7 82.1L141.6 82.1A4 4 0 0 1 145.6 86.1L145.6 120.9A4 4 0 0 1 141.6 124.9L44.7 124.9A4 4 0 0 1 40.7 120.9L40.7 86.1A4 4 0 0 1 44.7 82.1Z" fill="rgb(107,140,145)" stroke="rgb(255,255,255)" stroke-width="2" stroke-opacity="0.9" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr7-cls-42"></path>
+<path d="M149.1 82.1L245.9 82.1A4 4 0 0 1 249.9 86.1L249.9 120.9A4 4 0 0 1 245.9 124.9L149.1 124.9A4 4 0 0 1 145.1 120.9L145.1 86.1A4 4 0 0 1 149.1 82.1Z" fill="rgb(117,146,150)" stroke="rgb(255,255,255)" stroke-width="2" stroke-opacity="0.9" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr7-cls-43"></path>
+<path d="M253.4 82.1L350.3 82.1A4 4 0 0 1 354.3 86.1L354.3 120.9A4 4 0 0 1 350.3 124.9L253.4 124.9A4 4 0 0 1 249.4 120.9L249.4 86.1A4 4 0 0 1 253.4 82.1Z" fill="rgb(197,211,213)" stroke="rgb(255,255,255)" stroke-width="2" stroke-opacity="0.9" ecmeta_series_index="0" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr7-cls-44"></path>
+<path d="M44.7 39.8L141.6 39.8A4 4 0 0 1 145.6 43.8L145.6 78.6A4 4 0 0 1 141.6 82.6L44.7 82.6A4 4 0 0 1 40.7 78.6L40.7 43.8A4 4 0 0 1 44.7 39.8Z" fill="rgb(110,144,149)" stroke="rgb(255,255,255)" stroke-width="2" stroke-opacity="0.9" ecmeta_series_index="0" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr7-cls-45"></path>
+<path d="M149.1 39.8L245.9 39.8A4 4 0 0 1 249.9 43.8L249.9 78.6A4 4 0 0 1 245.9 82.6L149.1 82.6A4 4 0 0 1 145.1 78.6L145.1 43.8A4 4 0 0 1 149.1 39.8Z" fill="rgb(103,134,139)" stroke="rgb(255,255,255)" stroke-width="2" stroke-opacity="0.9" ecmeta_series_index="0" ecmeta_data_index="7" ecmeta_ssr_type="chart" class="zr7-cls-46"></path>
+<path d="M253.4 39.8L350.3 39.8A4 4 0 0 1 354.3 43.8L354.3 78.6A4 4 0 0 1 350.3 82.6L253.4 82.6A4 4 0 0 1 249.4 78.6L249.4 43.8A4 4 0 0 1 253.4 39.8Z" fill="rgb(162,182,185)" stroke="rgb(255,255,255)" stroke-width="2" stroke-opacity="0.9" ecmeta_series_index="0" ecmeta_data_index="8" ecmeta_ssr_type="chart" class="zr7-cls-47"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" transform="translate(93.1667 145.8333)" fill="rgb(28,32,38)" fill-opacity="0.84">82</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" transform="translate(197.5 145.8333)" fill="rgb(28,32,38)" fill-opacity="0.84">53</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" transform="translate(301.8333 145.8333)" fill="rgb(28,32,38)" fill-opacity="0.84">24</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" transform="translate(93.1667 103.5)" fill="rgb(28,32,38)" fill-opacity="0.84">95</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" transform="translate(197.5 103.5)" fill="rgb(28,32,38)" fill-opacity="0.84">66</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" transform="translate(301.8333 103.5)" fill="rgb(28,32,38)" fill-opacity="0.84">37</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" transform="translate(93.1667 61.1667)" fill="rgb(28,32,38)" fill-opacity="0.84">108</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" transform="translate(197.5 61.1667)" fill="rgb(28,32,38)" fill-opacity="0.84">79</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10.5px;font-family:inherit;" transform="translate(301.8333 61.1667)" fill="rgb(28,32,38)" fill-opacity="0.84">50</text>
+<path d="M-15 -27l160 0l0 42l-160 0Z" transform="translate(121 219)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#cfd2d7" stroke-width="0" class="zr7-cls-48"></path>
+<g clip-path="url(#zr7-c0)">
+<polygon points="0 0 12 0 12 130 0 130" transform="matrix(0,-1,1,0,121,219)" fill="url(#zr7-g0)" class="zr7-cls-50"></polygon>
+<polygon points="0 0 12 0 12 130 0 130" transform="matrix(0,-1,1,0,121,219)" fill="url(#zr7-g1)" class="zr7-cls-51"></polygon>
+</g>
+<defs >
+<clipPath id="zr7-c0">
+<path d="M3 0L9 0A3 3 0 0 1 12 3L12 127A3 3 0 0 1 9 130L3 130A3 3 0 0 1 0 127L0 3A3 3 0 0 1 3 0Z" transform="matrix(0,-1,1,0,121,219)" fill="#000" class="zr7-cls-49"></path>
+</clipPath>
+<linearGradient gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1" id="zr7-g0">
+<stop offset="0%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="1%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="2%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="3%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="4%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="5%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="6%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="7.000000000000001%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="8%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="9%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="10%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="11%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="12%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="13%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="14.000000000000002%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="15%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="16%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="17%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="18%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="19%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="20%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="21%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="22%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="23%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="24%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="25%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="26%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="27%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="28.000000000000004%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="28.999999999999996%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="30%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="31%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="32%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="33%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="34%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="35%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="36%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="37%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="38%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="39%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="40%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="41%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="42%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="43%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="44%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="45%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="46%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="47%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="48%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="49%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="50%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="51%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="52%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="53%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="54%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="55.00000000000001%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="56.00000000000001%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="56.99999999999999%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="57.99999999999999%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="59%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="60%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="61%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="62%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="63%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="64%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="65%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="66%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="67%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="68%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="69%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="70%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="71%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="72%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="73%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="74%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="75%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="76%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="77%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="78%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="79%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="80%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="81%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="82%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="83%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="84%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="85%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="86%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="87%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="88%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="89%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="90%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="91%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="92%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="93%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="94%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="95%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="96%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="97%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="98%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="99%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="100%" stop-color="rgb(207,210,215)"></stop>
+</linearGradient>
+<linearGradient gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1" id="zr7-g1">
+<stop offset="0%" stop-color="rgb(243,246,247)"></stop>
+<stop offset="1%" stop-color="rgb(242,245,246)"></stop>
+<stop offset="2%" stop-color="rgb(240,244,245)"></stop>
+<stop offset="3%" stop-color="rgb(239,243,244)"></stop>
+<stop offset="4%" stop-color="rgb(238,242,243)"></stop>
+<stop offset="5%" stop-color="rgb(237,241,242)"></stop>
+<stop offset="6%" stop-color="rgb(235,240,241)"></stop>
+<stop offset="7.000000000000001%" stop-color="rgb(234,239,240)"></stop>
+<stop offset="8%" stop-color="rgb(233,238,239)"></stop>
+<stop offset="9%" stop-color="rgb(231,237,238)"></stop>
+<stop offset="10%" stop-color="rgb(230,236,237)"></stop>
+<stop offset="11%" stop-color="rgb(229,235,236)"></stop>
+<stop offset="12%" stop-color="rgb(228,234,235)"></stop>
+<stop offset="13%" stop-color="rgb(226,233,235)"></stop>
+<stop offset="14.000000000000002%" stop-color="rgb(225,232,234)"></stop>
+<stop offset="15%" stop-color="rgb(224,231,233)"></stop>
+<stop offset="16%" stop-color="rgb(222,230,232)"></stop>
+<stop offset="17%" stop-color="rgb(221,229,231)"></stop>
+<stop offset="18%" stop-color="rgb(220,228,230)"></stop>
+<stop offset="19%" stop-color="rgb(218,227,229)"></stop>
+<stop offset="20%" stop-color="rgb(217,226,228)"></stop>
+<stop offset="21%" stop-color="rgb(216,225,227)"></stop>
+<stop offset="22%" stop-color="rgb(215,224,226)"></stop>
+<stop offset="23%" stop-color="rgb(213,223,225)"></stop>
+<stop offset="24%" stop-color="rgb(212,222,224)"></stop>
+<stop offset="25%" stop-color="rgb(211,221,223)"></stop>
+<stop offset="26%" stop-color="rgb(209,220,222)"></stop>
+<stop offset="27%" stop-color="rgb(208,219,221)"></stop>
+<stop offset="28.000000000000004%" stop-color="rgb(207,218,220)"></stop>
+<stop offset="28.999999999999996%" stop-color="rgb(206,217,219)"></stop>
+<stop offset="30%" stop-color="rgb(204,216,218)"></stop>
+<stop offset="31%" stop-color="rgb(203,215,217)"></stop>
+<stop offset="32%" stop-color="rgb(202,214,216)"></stop>
+<stop offset="33%" stop-color="rgb(200,213,215)"></stop>
+<stop offset="34%" stop-color="rgb(198,211,213)"></stop>
+<stop offset="35%" stop-color="rgb(195,209,211)"></stop>
+<stop offset="36%" stop-color="rgb(192,207,209)"></stop>
+<stop offset="37%" stop-color="rgb(189,204,206)"></stop>
+<stop offset="38%" stop-color="rgb(186,202,204)"></stop>
+<stop offset="39%" stop-color="rgb(183,199,202)"></stop>
+<stop offset="40%" stop-color="rgb(180,197,199)"></stop>
+<stop offset="41%" stop-color="rgb(177,194,197)"></stop>
+<stop offset="42%" stop-color="rgb(174,192,195)"></stop>
+<stop offset="43%" stop-color="rgb(171,190,192)"></stop>
+<stop offset="44%" stop-color="rgb(168,187,190)"></stop>
+<stop offset="45%" stop-color="rgb(165,185,188)"></stop>
+<stop offset="46%" stop-color="rgb(162,182,185)"></stop>
+<stop offset="47%" stop-color="rgb(159,180,183)"></stop>
+<stop offset="48%" stop-color="rgb(156,177,181)"></stop>
+<stop offset="49%" stop-color="rgb(153,175,178)"></stop>
+<stop offset="50%" stop-color="rgb(151,173,176)"></stop>
+<stop offset="51%" stop-color="rgb(148,170,174)"></stop>
+<stop offset="52%" stop-color="rgb(145,168,171)"></stop>
+<stop offset="53%" stop-color="rgb(142,165,169)"></stop>
+<stop offset="54%" stop-color="rgb(139,163,167)"></stop>
+<stop offset="55.00000000000001%" stop-color="rgb(136,160,164)"></stop>
+<stop offset="56.00000000000001%" stop-color="rgb(133,158,162)"></stop>
+<stop offset="56.99999999999999%" stop-color="rgb(130,155,160)"></stop>
+<stop offset="57.99999999999999%" stop-color="rgb(127,153,157)"></stop>
+<stop offset="59%" stop-color="rgb(124,151,155)"></stop>
+<stop offset="60%" stop-color="rgb(121,148,153)"></stop>
+<stop offset="61%" stop-color="rgb(118,146,150)"></stop>
+<stop offset="62%" stop-color="rgb(115,143,148)"></stop>
+<stop offset="63%" stop-color="rgb(112,141,146)"></stop>
+<stop offset="64%" stop-color="rgb(109,138,143)"></stop>
+<stop offset="65%" stop-color="rgb(106,136,141)"></stop>
+<stop offset="66%" stop-color="rgb(103,134,139)"></stop>
+<stop offset="67%" stop-color="rgb(101,132,137)"></stop>
+<stop offset="68%" stop-color="rgb(101,132,137)"></stop>
+<stop offset="69%" stop-color="rgb(102,133,138)"></stop>
+<stop offset="70%" stop-color="rgb(102,133,138)"></stop>
+<stop offset="71%" stop-color="rgb(102,134,139)"></stop>
+<stop offset="72%" stop-color="rgb(102,134,139)"></stop>
+<stop offset="73%" stop-color="rgb(103,134,139)"></stop>
+<stop offset="74%" stop-color="rgb(103,135,140)"></stop>
+<stop offset="75%" stop-color="rgb(103,135,140)"></stop>
+<stop offset="76%" stop-color="rgb(104,135,140)"></stop>
+<stop offset="77%" stop-color="rgb(104,136,141)"></stop>
+<stop offset="78%" stop-color="rgb(104,136,141)"></stop>
+<stop offset="79%" stop-color="rgb(104,136,141)"></stop>
+<stop offset="80%" stop-color="rgb(105,137,142)"></stop>
+<stop offset="81%" stop-color="rgb(105,137,142)"></stop>
+<stop offset="82%" stop-color="rgb(105,138,143)"></stop>
+<stop offset="83%" stop-color="rgb(105,138,143)"></stop>
+<stop offset="84%" stop-color="rgb(106,138,143)"></stop>
+<stop offset="85%" stop-color="rgb(106,139,144)"></stop>
+<stop offset="86%" stop-color="rgb(106,139,144)"></stop>
+<stop offset="87%" stop-color="rgb(106,139,144)"></stop>
+<stop offset="88%" stop-color="rgb(107,140,145)"></stop>
+<stop offset="89%" stop-color="rgb(107,140,145)"></stop>
+<stop offset="90%" stop-color="rgb(107,140,145)"></stop>
+<stop offset="91%" stop-color="rgb(108,141,146)"></stop>
+<stop offset="92%" stop-color="rgb(108,141,146)"></stop>
+<stop offset="93%" stop-color="rgb(108,141,146)"></stop>
+<stop offset="94%" stop-color="rgb(108,142,147)"></stop>
+<stop offset="95%" stop-color="rgb(109,142,147)"></stop>
+<stop offset="96%" stop-color="rgb(109,143,148)"></stop>
+<stop offset="97%" stop-color="rgb(109,143,148)"></stop>
+<stop offset="98%" stop-color="rgb(109,143,148)"></stop>
+<stop offset="99%" stop-color="rgb(110,144,149)"></stop>
+<stop offset="100%" stop-color="rgb(110,144,149)"></stop>
+</linearGradient>
+</defs>
+<style ><![CDATA[
+.zr7-cls-39:hover {
+cursor:pointer;
+fill:rgba(114,148,154,1);
+}
+.zr7-cls-40:hover {
+cursor:pointer;
+fill:rgba(168,192,195,1);
+}
+.zr7-cls-41:hover {
+cursor:pointer;
+fill:rgba(235,246,248,1);
+}
+.zr7-cls-42:hover {
+cursor:pointer;
+fill:rgba(117,154,159,1);
+}
+.zr7-cls-43:hover {
+cursor:pointer;
+fill:rgba(128,160,165,1);
+}
+.zr7-cls-44:hover {
+cursor:pointer;
+fill:rgba(216,232,234,1);
+}
+.zr7-cls-45:hover {
+cursor:pointer;
+fill:rgba(121,158,163,1);
+}
+.zr7-cls-46:hover {
+cursor:pointer;
+fill:rgba(113,147,152,1);
+}
+.zr7-cls-47:hover {
+cursor:pointer;
+fill:rgba(178,200,203,1);
+}
+.zr7-cls-48:hover {
+pointer-events:none;
+}
+.zr7-cls-49:hover {
+cursor:pointer;
+fill:rgba(0,0,0,1);
+}
+.zr7-cls-50:hover {
+cursor:pointer;
+fill:[object Object];
+}
+.zr7-cls-51:hover {
+cursor:pointer;
+fill:[object Object];
+}
+
+]]>
+
+</style>
+</svg></div>
+  </section>
+  <section class="panel">
+    <header class="panel-head"><span class="panel-title">表格 · 原始行</span><span class="panel-note">table</span></header>
+    <div class="panel-body"><div class="cl-tblwrap" style="max-height:236px"><table class="cl-tbl"><thead><tr><th>日期</th><th>线路</th><th>产量</th><th>能耗</th></tr></thead><tbody><tr><td>周一</td><td>A 线</td><td>320</td><td>88</td></tr><tr><td>周一</td><td>B 线</td><td>260</td><td>74</td></tr><tr><td>周二</td><td>A 线</td><td>365</td><td>97</td></tr><tr><td>周二</td><td>B 线</td><td>298</td><td>81</td></tr><tr><td>周三</td><td>A 线</td><td>410</td><td>88</td></tr><tr><td>周三</td><td>B 线</td><td>336</td><td>88</td></tr></tbody></table></div></div>
+  </section></div>
+</body></html>
